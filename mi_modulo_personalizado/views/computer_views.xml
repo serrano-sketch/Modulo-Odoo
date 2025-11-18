@@ -42,8 +42,8 @@
         <field name="view_mode">tree,form</field>
     </record>
 
-    <menuitem id="menu_pc_root" name="Equipos" sequence="10" groups="group_pc_assets_user"/>
-    <menuitem id="menu_pc_computer" name="Ordenadores" parent="menu_pc_root" action="action_pc_computer" sequence="10" groups="group_pc_assets_user"/>
-    <menuitem id="menu_pc_component" name="Componentes" parent="menu_pc_root" action="action_pc_component" sequence="20" groups="group_pc_assets_user"/>
+    <menuitem id="menu_pc_root" name="Equipos" sequence="10" groups="base.group_user"/>
+    <menuitem id="menu_pc_computer" name="Ordenadores" parent="menu_pc_root" action="action_pc_computer" sequence="10" groups="base.group_user"/>
+    <menuitem id="menu_pc_component" name="Componentes" parent="menu_pc_root" action="action_pc_component" sequence="20" groups="base.group_user"/>
 
 </odoo>

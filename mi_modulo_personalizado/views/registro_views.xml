@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="mi_modulo_personalizado_registro_view_list" model="ir.ui.view">
+        <field name="name">mi_modulo_personalizado.registro.list</field>
+        <field name="model">mi_modulo_personalizado.registro</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="fecha"/>
+                <field name="usuario_id"/>
+                <field name="activo"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="mi_modulo_personalizado_registro_view_form" model="ir.ui.view">
+        <field name="name">mi_modulo_personalizado.registro.form</field>
+        <field name="model">mi_modulo_personalizado.registro</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="fecha"/>
+                        <field name="usuario_id"/>
+                        <field name="activo"/>
+                    </group>
+                    <group>
+                        <field name="descripcion"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="mi_modulo_personalizado_action_registro" model="ir.actions.act_window">
+        <field name="name">Registros</field>
+        <field name="res_model">mi_modulo_personalizado.registro</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <menuitem id="mi_modulo_personalizado_menu_registro" name="Registros" parent="menu_pc_root" action="mi_modulo_personalizado_action_registro" sequence="40" groups="base.group_user"/>
+
+</odoo>

@@ -16,6 +16,7 @@
         'views/component_views.xml',
         'views/computer_views.xml',
         'views/os_tag_views.xml',
+        'views/registro_views.xml',
     ],
     'installable': True,
     'application': True,
