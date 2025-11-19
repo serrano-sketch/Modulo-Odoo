@@ -5,6 +5,8 @@ from odoo.exceptions import ValidationError
 
 
 class PcComputer(models.Model):
+    """Modelo principal que relaciona equipos con usuarios, componentes y tags."""
+
     _name = 'pc.computer'
     _description = 'Ordenador de empresa'
 
@@ -37,12 +39,14 @@ class PcComputer(models.Model):
 
     @api.constrains('last_mod_date')
     def _check_last_mod_date(self):
+        """Evita que la fecha de modificación quede registrada en el futuro."""
         for record in self:
             if record.last_mod_date and record.last_mod_date > fields.Date.today():
                 raise ValidationError('La fecha no puede ser futura')
 
     @api.depends('component_ids.price')
     def _compute_total(self):
+        """Calcula el precio total a partir del coste de cada componente."""
         for record in self:
             total = sum(record.component_ids.mapped('price'))
             record.price_total = total

@@ -40,6 +40,16 @@
         <field name="view_mode">list,form</field>
     </record>
 
-    <menuitem id="mi_modulo_personalizado_menu_registro" name="Registros" parent="menu_pc_root" action="mi_modulo_personalizado_action_registro" sequence="40" groups="base.group_user"/>
+    <menuitem id="mi_modulo_personalizado_menu_registro_root"
+              name="Registros del módulo"
+              sequence="50"
+              groups="base.group_user"/>
+
+    <menuitem id="mi_modulo_personalizado_menu_registro"
+              name="Registros"
+              parent="mi_modulo_personalizado_menu_registro_root"
+              action="mi_modulo_personalizado_action_registro"
+              sequence="10"
+              groups="base.group_user"/>
 
 </odoo>

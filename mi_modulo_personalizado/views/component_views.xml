@@ -34,7 +34,7 @@
     <record id="action_pc_component" model="ir.actions.act_window">
         <field name="name">Componentes</field>
         <field name="res_model">pc.component</field>
-        <field name="view_mode">tree,form</field>
+        <field name="view_mode">list,form</field>
     </record>
 
 </odoo>

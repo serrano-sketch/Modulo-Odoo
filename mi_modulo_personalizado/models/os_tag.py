@@ -4,6 +4,8 @@ from odoo import fields, models
 
 
 class PcOsTag(models.Model):
+    """Etiquetas reutilizables para describir sistemas operativos instalados."""
+
     _name = 'pc.os.tag'
     _description = 'Etiqueta de sistema operativo'
 
