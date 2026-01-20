@@ -8,10 +8,12 @@
             <!-- Locate the identification field (Badge ID) and add ours after -->
             <!-- Note: In standard Odoo, 'identification_id' is often in the 'Private Information' tab -->
             <!-- If we fail to find it, we might error, but it is a very standard field -->
-            <xpath expr="//field[@name='identification_id']" position="after">
+            <!-- Locate the main contact info block. 'mobile_phone' is usually in the top group -->
+            <xpath expr="//field[@name='mobile_phone']" position="before">
                 <field name="dni"/>
                 <field name="nss"/>
             </xpath>
+            
             <xpath expr="//field[@name='ssnid']" position="attributes">
                 <attribute name="invisible">1</attribute>
             </xpath>
