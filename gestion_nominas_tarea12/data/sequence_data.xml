@@ -1,20 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data noupdate="1">
-        <record id="seq_tarea12_nomina" model="ir.sequence">
-            <field name="name">Secuencia Nómina</field>
-            <field name="code">tarea12.nomina</field>
-            <field name="prefix">NOM-%(year)s-</field>
-            <field name="padding">4</field>
-            <field name="company_id" eval="False"/>
-        </record>
+<?xml version="1.0" encoding="utf-8"?> <!-- Declaro la cabecera XML en UTF-8 para evitar problemas con los acentos. -->
+<odoo> <!-- Abro el nodo raíz que Odoo espera para cargar datos. -->
+    <data noupdate="1"> <!-- Indico que estos registros no se deben actualizar al cargar módulos de nuevo. -->
+        <record id="seq_tarea12_nomina" model="ir.sequence"> <!-- Creo la secuencia que usará cada nómina. -->
+            <field name="name">Secuencia Nómina</field> <!-- Este será el nombre descriptivo que veo en ajustes. -->
+            <field name="code">tarea12.nomina</field> <!-- Este código es el que llamaré desde el Python. -->
+            <field name="prefix">NOM-%(year)s-</field> <!-- Prefijo con el año para que sea fácil identificar cada registro. -->
+            <field name="padding">4</field> <!-- Pongo cuatro dígitos para tener números tipo 0001. -->
+            <field name="company_id" eval="False"/> <!-- Dejo la secuencia compartida entre compañías. -->
+        </record> <!-- Cierro la secuencia de nómina. -->
 
-        <record id="seq_tarea12_declaracion" model="ir.sequence">
-            <field name="name">Secuencia Declaración Renta</field>
-            <field name="code">tarea12.declaracion.renta</field>
-            <field name="prefix">RENTA-%(year)s-</field>
-            <field name="padding">4</field>
-            <field name="company_id" eval="False"/>
-        </record>
-    </data>
-</odoo>
+        <record id="seq_tarea12_declaracion" model="ir.sequence"> <!-- Creo otra secuencia para las declaraciones. -->
+            <field name="name">Secuencia Declaración Renta</field> <!-- Nombre visible de la secuencia de renta. -->
+            <field name="code">tarea12.declaracion.renta</field> <!-- Código técnico que usaré en el modelo de declaración. -->
+            <field name="prefix">RENTA-%(year)s-</field> <!-- Prefijo específico para distinguir estas referencias. -->
+            <field name="padding">4</field> <!-- Mantengo la misma longitud de cuatro dígitos. -->
+            <field name="company_id" eval="False"/> <!-- También la hago global para todas las compañías. -->
+        </record> <!-- Termino la definición de secuencia de declaraciones. -->
+    </data> <!-- Cierro el bloque de datos que no se actualiza. -->
+</odoo> <!-- Fin del archivo de datos de secuencias. -->

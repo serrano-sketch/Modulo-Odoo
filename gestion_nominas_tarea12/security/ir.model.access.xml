@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?> <!-- Cabecera XML para poder escribir los permisos con comentarios. -->
+<odoo> <!-- Nodo raíz para que Odoo procese los datos. -->
+    <data noupdate="1"> <!-- Marco noupdate para no sobreescribir permisos personalizados del cliente. -->
+        <record id="access_tarea12_nomina_user" model="ir.model.access"> <!-- Permiso básico para que los usuarios de RRHH trabajen con nóminas. -->
+            <field name="name">tarea12.nomina.user</field> <!-- Nombre legible del permiso. -->
+            <field name="model_id" ref="model_tarea12_nomina"/> <!-- Apunta al modelo de nóminas. -->
+            <field name="group_id" ref="hr.group_hr_user"/> <!-- Limito el permiso al grupo de usuarios de RRHH. -->
+            <field name="perm_read" eval="1"/> <!-- Les dejo leer las nóminas. -->
+            <field name="perm_write" eval="1"/> <!-- También pueden editarlas. -->
+            <field name="perm_create" eval="1"/> <!-- Y crear nuevas. -->
+            <field name="perm_unlink" eval="0"/> <!-- Pero no permitiré borrar registros. -->
+        </record> <!-- Cierro el permiso básico de nóminas. -->
+
+        <record id="access_tarea12_nomina_manager" model="ir.model.access"> <!-- Permiso para managers con control completo de nóminas. -->
+            <field name="name">tarea12.nomina.manager</field> <!-- Nombre descriptivo del permiso senior. -->
+            <field name="model_id" ref="model_tarea12_nomina"/> <!-- Sigue apuntando al mismo modelo. -->
+            <field name="group_id" ref="hr.group_hr_manager"/> <!-- Solo para el grupo de managers de RRHH. -->
+            <field name="perm_read" eval="1"/> <!-- Pueden leer sin restricciones. -->
+            <field name="perm_write" eval="1"/> <!-- Modificar registros también está permitido. -->
+            <field name="perm_create" eval="1"/> <!-- Y crear nóminas nuevas. -->
+            <field name="perm_unlink" eval="1"/> <!-- Además les dejo borrar si hace falta. -->
+        </record> <!-- Fin del permiso para managers de nóminas. -->
+
+        <record id="access_tarea12_nomina_ajuste_user" model="ir.model.access"> <!-- Permiso para editar los ajustes desde el grupo usuario. -->
+            <field name="name">tarea12.nomina.ajuste.user</field> <!-- Nombre del permiso de ajustes. -->
+            <field name="model_id" ref="model_tarea12_nomina_ajuste"/> <!-- Apunta al modelo de bonificaciones/deducciones. -->
+            <field name="group_id" ref="hr.group_hr_user"/> <!-- Disponible para usuarios de RRHH. -->
+            <field name="perm_read" eval="1"/> <!-- Les dejo consultar los ajustes. -->
+            <field name="perm_write" eval="1"/> <!-- También pueden modificarlos. -->
+            <field name="perm_create" eval="1"/> <!-- Los usuarios pueden crear nuevos ajustes. -->
+            <field name="perm_unlink" eval="0"/> <!-- Pero no permitiré eliminar registros para mantener trazabilidad. -->
+        </record> <!-- Cierro el permiso de ajustes para usuarios. -->
+
+        <record id="access_tarea12_nomina_ajuste_manager" model="ir.model.access"> <!-- Permiso completo de ajustes para managers. -->
+            <field name="name">tarea12.nomina.ajuste.manager</field> <!-- Nombre representativo del permiso avanzado. -->
+            <field name="model_id" ref="model_tarea12_nomina_ajuste"/> <!-- Sigue usando el modelo de ajustes. -->
+            <field name="group_id" ref="hr.group_hr_manager"/> <!-- Solo aplicará a managers de RRHH. -->
+            <field name="perm_read" eval="1"/> <!-- Lectura habilitada. -->
+            <field name="perm_write" eval="1"/> <!-- Escritura también habilitada. -->
+            <field name="perm_create" eval="1"/> <!-- Creación sin restricciones. -->
+            <field name="perm_unlink" eval="1"/> <!-- Los managers sí pueden eliminar registros. -->
+        </record> <!-- Fin del permiso para managers sobre ajustes. -->
+
+        <record id="access_tarea12_declaracion_user" model="ir.model.access"> <!-- Permiso para que los usuarios consulten y generen declaraciones. -->
+            <field name="name">tarea12.declaracion.user</field> <!-- Nombre del permiso de declaraciones. -->
+            <field name="model_id" ref="model_tarea12_declaracion_renta"/> <!-- Modelo técnico de las declaraciones. -->
+            <field name="group_id" ref="hr.group_hr_user"/> <!-- Restringido a usuarios de RRHH. -->
+            <field name="perm_read" eval="1"/> <!-- Les dejo leer las declaraciones. -->
+            <field name="perm_write" eval="1"/> <!-- Y editarlas para corregir datos. -->
+            <field name="perm_create" eval="1"/> <!-- También pueden crear registros nuevos. -->
+            <field name="perm_unlink" eval="0"/> <!-- No permito borrar declaraciones desde este grupo. -->
+        </record> <!-- Cierro el permiso de declaraciones para usuarios. -->
+
+        <record id="access_tarea12_declaracion_manager" model="ir.model.access"> <!-- Permiso completo de declaraciones para managers. -->
+            <field name="name">tarea12.declaracion.manager</field> <!-- Nombre del permiso ampliado. -->
+            <field name="model_id" ref="model_tarea12_declaracion_renta"/> <!-- Modelo objetivo. -->
+            <field name="group_id" ref="hr.group_hr_manager"/> <!-- Disponible solo para managers. -->
+            <field name="perm_read" eval="1"/> <!-- Lectura permitida. -->
+            <field name="perm_write" eval="1"/> <!-- Edición permitida. -->
+            <field name="perm_create" eval="1"/> <!-- Creación permitida. -->
+            <field name="perm_unlink" eval="1"/> <!-- Permito borrar registros si lo necesita la gerencia. -->
+        </record> <!-- Fin del permiso manager para declaraciones. -->
+    </data> <!-- Cierro el bloque de datos de seguridad. -->
+</odoo> <!-- Termino el archivo de permisos. -->

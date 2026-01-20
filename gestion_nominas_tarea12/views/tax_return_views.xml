@@ -1,63 +1,60 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-        <record id="view_tarea12_declaracion_tree" model="ir.ui.view">
-            <field name="name">tarea12.declaracion.renta.list</field>
-            <field name="model">tarea12.declaracion.renta</field>
-            <field name="arch" type="xml">
-                <list>
-                    <field name="name"/>
-                    <field name="employee_id"/>
-                    <field name="year"/>
-                    <field name="payroll_count"/>
-                    <field name="salary_total"/>
-                    <field name="irpf_total"/>
-                </list>
-            </field>
-        </record>
+<?xml version="1.0" encoding="utf-8"?> <!-- Cabecera XML para trabajar con acentos. -->
+<odoo> <!-- Nodo raíz requerido por Odoo. -->
+    <data> <!-- Inicio del bloque de definiciones de vistas. -->
+        <record id="view_tarea12_declaracion_tree" model="ir.ui.view"> <!-- Vista lista para las declaraciones de renta. -->
+            <field name="name">tarea12.declaracion.renta.list</field> <!-- Nombre técnico de la vista. -->
+            <field name="model">tarea12.declaracion.renta</field> <!-- Modelo al que se aplica. -->
+            <field name="arch" type="xml"> <!-- A partir de aquí defino la arquitectura XML. -->
+                <list> <!-- Vista tipo lista sin decoraciones especiales. -->
+                    <field name="name"/> <!-- Muestro la referencia. -->
+                    <field name="employee_id"/> <!-- Enseño el empleado asociado. -->
+                    <field name="year"/> <!-- Indico el año fiscal. -->
+                    <field name="payroll_count"/> <!-- Número de nóminas ligadas. -->
+                    <field name="salary_total"/> <!-- Total bruto declarado. -->
+                    <field name="irpf_total"/> <!-- Total de IRPF retenido. -->
+                </list> <!-- Cierro la vista lista. -->
+            </field> <!-- Fin del campo arch. -->
+        </record> <!-- Cierro la vista lista. -->
 
-        <record id="view_tarea12_declaracion_form" model="ir.ui.view">
-            <field name="name">tarea12.declaracion.renta.form</field>
-            <field name="model">tarea12.declaracion.renta</field>
-            <field name="arch" type="xml">
-                <form string="Declaración de renta">
-                    <sheet>
-                        <group>
-                            <group>
-                                <field name="name" readonly="1"/>
-                                <field name="employee_id"/>
-                                <field name="year"/>
-                            </group>
-                            <group>
-                                <field name="salary_total" readonly="1"/>
-                                <field name="irpf_total" readonly="1"/>
-                                <field name="payroll_count" readonly="1"/>
-                            </group>
-                        </group>
-                        <group>
-                            <field name="date_from" invisible="1"/>
-                            <field name="date_to" invisible="1"/>
-                            <field name="payroll_ids" widget="many2many_tags"
-                                   domain="[('employee_id', '=', employee_id),
-                                            ('date', '&gt;=', date_from or False),
-                                            ('date', '&lt;=', date_to or False)]"/>
-                        </group>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+        <record id="view_tarea12_declaracion_form" model="ir.ui.view"> <!-- Vista formulario para editar las declaraciones. -->
+            <field name="name">tarea12.declaracion.renta.form</field> <!-- Nombre técnico del formulario. -->
+            <field name="model">tarea12.declaracion.renta</field> <!-- Modelo de destino. -->
+            <field name="arch" type="xml"> <!-- Empiezo el XML de la vista. -->
+                <form string="Declaración de renta"> <!-- Formulario con título personalizado. -->
+                    <sheet> <!-- Mantengo el layout estándar. -->
+                        <group> <!-- Primer bloque con información resumida. -->
+                            <group> <!-- Columna izquierda con datos principales. -->
+                                <field name="name" readonly="1"/> <!-- Referencia bloqueada para que no se edite. -->
+                                <field name="employee_id"/> <!-- Selección del empleado dueño de la declaración. -->
+                                <field name="year"/> <!-- Campo para elegir el año que estoy declarando. -->
+                            </group> <!-- Cierro la columna izquierda. -->
+                            <group> <!-- Columna derecha con totales. -->
+                                <field name="salary_total" readonly="1"/> <!-- Total bruto sumado de las nóminas vinculadas. -->
+                                <field name="irpf_total" readonly="1"/> <!-- Total de IRPF retenido en esas nóminas. -->
+                                <field name="payroll_count" readonly="1"/> <!-- Número de nóminas contabilizadas. -->
+                            </group> <!-- Cierro la columna derecha. -->
+                        </group> <!-- Cierro el bloque superior. -->
+                        <group> <!-- Segundo grupo con filtros y selección de nóminas. -->
+                            <field name="date_from" invisible="1"/> <!-- Campo auxiliar oculto con la fecha de inicio. -->
+                            <field name="date_to" invisible="1"/> <!-- Campo auxiliar oculto con la fecha de fin. -->
+                            <field name="payroll_ids" widget="many2many_tags" domain="[('employee_id', '=', employee_id), ('date', '&gt;=', date_from or False), ('date', '&lt;=', date_to or False)]"/> <!-- Selector many2many limitado al empleado y rango de fechas correctos. -->
+                        </group> <!-- Cierro el grupo de selección. -->
+                    </sheet> <!-- Cierro el sheet del formulario. -->
+                </form> <!-- Termino el formulario. -->
+            </field> <!-- Finalizo el campo arch. -->
+        </record> <!-- Termino la vista formulario. -->
 
-        <record id="view_tarea12_declaracion_search" model="ir.ui.view">
-            <field name="name">tarea12.declaracion.renta.search</field>
-            <field name="model">tarea12.declaracion.renta</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"/>
-                    <field name="employee_id"/>
-                    <field name="year"/>
-                </search>
-            </field>
-        </record>
+        <record id="view_tarea12_declaracion_search" model="ir.ui.view"> <!-- Vista de búsqueda. -->
+            <field name="name">tarea12.declaracion.renta.search</field> <!-- Nombre técnico de la búsqueda. -->
+            <field name="model">tarea12.declaracion.renta</field> <!-- Modelo asociado. -->
+            <field name="arch" type="xml"> <!-- Inicio la definición XML. -->
+                <search> <!-- Configuro los filtros básicos. -->
+                    <field name="name"/> <!-- Permitirá buscar por referencia. -->
+                    <field name="employee_id"/> <!-- Filtro por empleado. -->
+                    <field name="year"/> <!-- Filtro por año. -->
+                </search> <!-- Cierro el bloque de búsqueda. -->
+            </field> <!-- Fin del campo arch. -->
+        </record> <!-- Termino la vista search. -->
 
-    </data>
-</odoo>
+    </data> <!-- Cierro el bloque de datos. -->
+</odoo> <!-- Final del archivo de vistas de declaraciones. -->

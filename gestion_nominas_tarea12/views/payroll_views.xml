@@ -1,114 +1,107 @@
-<?xml version="1.0" encoding="utf-8"?>
-<odoo>
-    <data>
-        <record id="action_tarea12_declaracion_tree" model="ir.actions.act_window">
-            <field name="name">Declaraciones</field>
-            <field name="res_model">tarea12.declaracion.renta</field>
-            <field name="view_mode">list,form</field>
-        </record>
+<?xml version="1.0" encoding="utf-8"?> <!-- Establezco la cabecera XML para trabajar con tildes sin errores. -->
+<odoo> <!-- Abro el contenedor principal que Odoo espera. -->
+    <data> <!-- Inicio el bloque de registros de vistas y acciones. -->
+        <record id="action_tarea12_declaracion_tree" model="ir.actions.act_window"> <!-- Acción reutilizada para saltar a las declaraciones. -->
+            <field name="name">Declaraciones</field> <!-- Nombre que verán los usuarios en botones o menús. -->
+            <field name="res_model">tarea12.declaracion.renta</field> <!-- Modelo que abrirá la acción. -->
+            <field name="view_mode">list,form</field> <!-- Modo de vista inicial: lista y formulario. -->
+        </record> <!-- Cierro la acción de declaraciones. -->
 
-        <record id="view_tarea12_nomina_tree" model="ir.ui.view">
-            <field name="name">tarea12.nomina.list</field>
-            <field name="model">tarea12.nomina</field>
-            <field name="arch" type="xml">
-                <list decoration-muted="state == 'draft'" decoration-success="state == 'paid'">
-                    <field name="name"/>
-                    <field name="employee_id"/>
-                    <field name="date"/>
-                    <field name="salary_base"/>
-                    <field name="bonus_amount"/>
-                    <field name="deduction_amount"/>
-                    <field name="irpf_amount"/>
-                    <field name="net_amount"/>
-                    <field name="state"/>
-                </list>
-            </field>
-        </record>
+        <record id="view_tarea12_nomina_tree" model="ir.ui.view"> <!-- Vista lista para las nóminas. -->
+            <field name="name">tarea12.nomina.list</field> <!-- Nombre técnico de la vista. -->
+            <field name="model">tarea12.nomina</field> <!-- Modelo al que aplica la vista. -->
+            <field name="arch" type="xml"> <!-- Indico que lo que viene es la arquitectura XML de la vista. -->
+                <list decoration-muted="state == 'draft'" decoration-success="state == 'paid'"> <!-- Configuro la lista resaltando según el estado. -->
+                    <field name="name"/> <!-- Muestro la referencia de la nómina. -->
+                    <field name="employee_id"/> <!-- Enseño el empleado asociado. -->
+                    <field name="date"/> <!-- Incluyo la fecha de la nómina. -->
+                    <field name="salary_base"/> <!-- Añado el sueldo base para tenerlo visible. -->
+                    <field name="bonus_amount"/> <!-- Muestro el total de bonificaciones. -->
+                    <field name="deduction_amount"/> <!-- Muestro el total de deducciones. -->
+                    <field name="irpf_amount"/> <!-- Enseño cuánto IRPF se ha retenido. -->
+                    <field name="net_amount"/> <!-- Destaco el sueldo neto resultante. -->
+                    <field name="state"/> <!-- Muestro el estado para saber en qué fase está. -->
+                </list> <!-- Cierro la definición de la vista lista. -->
+            </field> <!-- Fin del campo arch. -->
+        </record> <!-- Termino la vista lista. -->
 
-        <record id="view_tarea12_nomina_form" model="ir.ui.view">
-            <field name="name">tarea12.nomina.form</field>
-            <field name="model">tarea12.nomina</field>
-            <field name="arch" type="xml">
-                <form string="Nómina">
-                    <sheet>
-                        <header>
-                            <button name="action_reset_to_draft" type="object" string="Reabrir"
-                                    invisible="state not in ['confirmed', 'paid']"/>
-                            <button name="action_confirm" type="object" string="Confirmar" class="btn-primary"
-                                    invisible="state != 'draft'"/>
-                            <button name="action_mark_paid" type="object" string="Marcar como pagada" class="btn-success"
-                                    invisible="state != 'confirmed'"/>
-                            <field name="state" widget="statusbar" statusbar_visible="'draft','confirmed','paid'"/>
-                        </header>
-                        <div class="oe_button_box" name="button_box">
-                            <button class="oe_stat_button" type="action"
-                                    name="%(action_tarea12_declaracion_tree)d"
-                                    invisible="not employee_id"
-                                    context="{'search_default_employee_id': employee_id,
-                                              'default_employee_id': employee_id}">
-                                <div class="o_stat_info">
-                                    <span class="o_stat_text">Declaraciones</span>
-                                </div>
-                            </button>
-                        </div>
-                        <group>
-                            <group>
-                                <field name="name" readonly="1"/>
-                                <field name="employee_id"/>
-                                <field name="date"/>
-                                <field name="irpf_rate"/>
-                            </group>
-                            <group>
-                                <field name="salary_base"/>
-                                <field name="bonus_amount" readonly="1"/>
-                                <field name="deduction_amount" readonly="1"/>
-                                <field name="taxable_amount" readonly="1"/>
-                            </group>
-                        </group>
-                        <notebook>
-                            <page string="Bonificaciones y deducciones">
-                                <field name="adjustment_ids">
-                                    <list editable="bottom">
-                                        <field name="type"/>
-                                        <field name="name"/>
-                                        <field name="amount"/>
-                                    </list>
-                                </field>
-                            </page>
-                            <page string="Resumen">
-                                <group>
-                                    <field name="gross_amount" readonly="1"/>
-                                    <field name="irpf_amount" readonly="1"/>
-                                    <field name="net_amount" readonly="1"/>
-                                    <field name="payment_receipt" filename="name"/>
-                                </group>
-                            </page>
-                        </notebook>
-                    </sheet>
-                </form>
-            </field>
-        </record>
+        <record id="view_tarea12_nomina_form" model="ir.ui.view"> <!-- Vista formulario para gestionar una nómina. -->
+            <field name="name">tarea12.nomina.form</field> <!-- Nombre técnico del formulario. -->
+            <field name="model">tarea12.nomina</field> <!-- Modelo objetivo. -->
+            <field name="arch" type="xml"> <!-- Inicio la arquitectura del formulario. -->
+                <form string="Nómina"> <!-- Formulario con título personalizado. -->
+                    <sheet> <!-- Uso un sheet para mantener el estilo estándar de Odoo. -->
+                        <header> <!-- Barra de acciones del formulario. -->
+                            <button name="action_reset_to_draft" type="object" string="Reabrir" invisible="state not in ['confirmed', 'paid']"/> <!-- Botón para volver a borrador cuando proceda. -->
+                            <button name="action_confirm" type="object" string="Confirmar" class="btn-primary" invisible="state != 'draft'"/> <!-- Botón principal que confirma la nómina. -->
+                            <button name="action_mark_paid" type="object" string="Marcar como pagada" class="btn-success" invisible="state != 'confirmed'"/> <!-- Botón verde para cerrar el flujo marcando como pagada. -->
+                            <field name="state" widget="statusbar" statusbar_visible="'draft','confirmed','paid'"/> <!-- Barra de estados para seguir el circuito visualmente. -->
+                        </header> <!-- Cierro la cabecera. -->
+                        <div class="oe_button_box" name="button_box"> <!-- Caja superior de botones estadísticos. -->
+                            <button class="oe_stat_button" type="action" name="%(action_tarea12_declaracion_tree)d" invisible="not employee_id" context="{'search_default_employee_id': employee_id, 'default_employee_id': employee_id}"> <!-- Botón que hace de acceso rápido a las declaraciones del empleado. -->
+                                <div class="o_stat_info"> <!-- Contenedor del texto del botón estadístico. -->
+                                    <span class="o_stat_text">Declaraciones</span> <!-- Texto que explicita qué abre. -->
+                                </div> <!-- Cierro el bloque de información del botón. -->
+                            </button> <!-- Finalizo el botón estadístico. -->
+                        </div> <!-- Fin de la barra de botones. -->
+                        <group> <!-- Primer grupo para disposición de campos principales. -->
+                            <group> <!-- Subgrupo izquierdo. -->
+                                <field name="name" readonly="1"/> <!-- Campo de referencia bloqueado para evitar cambios manuales. -->
+                                <field name="employee_id"/> <!-- Selección del empleado responsable de la nómina. -->
+                                <field name="date"/> <!-- Fecha exacta de la nómina. -->
+                                <field name="irpf_rate"/> <!-- Porcentaje de IRPF que se aplica. -->
+                            </group> <!-- Cierro el subgrupo izquierdo. -->
+                            <group> <!-- Subgrupo derecho. -->
+                                <field name="salary_base"/> <!-- Campo para editar el sueldo base. -->
+                                <field name="bonus_amount" readonly="1"/> <!-- Bonificaciones calculadas en modo solo lectura. -->
+                                <field name="deduction_amount" readonly="1"/> <!-- Deducciones calculadas también bloqueadas. -->
+                                <field name="taxable_amount" readonly="1"/> <!-- Base imponible resultante. -->
+                            </group> <!-- Cierro el subgrupo derecho. -->
+                        </group> <!-- Termino el grupo principal. -->
+                        <notebook> <!-- Libreta con pestañas para agrupar información adicional. -->
+                            <page string="Bonificaciones y deducciones"> <!-- Primera pestaña dedicada a los ajustes. -->
+                                <field name="adjustment_ids"> <!-- Inserto el One2many de ajustes. -->
+                                    <list editable="bottom"> <!-- Lista editable para añadir ajustes desde abajo. -->
+                                        <field name="type"/> <!-- Tipo de ajuste: bonificación o deducción. -->
+                                        <field name="name"/> <!-- Descripción del concepto. -->
+                                        <field name="amount"/> <!-- Importe concreto del ajuste. -->
+                                    </list> <!-- Cierro la vista lista embebida. -->
+                                </field> <!-- Cierro el field de ajustes. -->
+                            </page> <!-- Fin de la pestaña de ajustes. -->
+                            <page string="Resumen"> <!-- Segunda pestaña con los totales. -->
+                                <group> <!-- Agrupo los campos para mantener el diseño. -->
+                                    <field name="gross_amount" readonly="1"/> <!-- Muestro el bruto calculado. -->
+                                    <field name="irpf_amount" readonly="1"/> <!-- Muestro el IRPF retenido. -->
+                                    <field name="net_amount" readonly="1"/> <!-- Muestro el neto resultante. -->
+                                    <field name="payment_receipt" filename="name"/> <!-- Permito adjuntar el justificante de pago. -->
+                                </group> <!-- Cierro el grupo del resumen. -->
+                            </page> <!-- Final de la pestaña resumen. -->
+                        </notebook> <!-- Termino el notebook completo. -->
+                    </sheet> <!-- Cierro el contenedor sheet. -->
+                </form> <!-- Finalizo el formulario. -->
+            </field> <!-- Cierro el campo arch del formulario. -->
+        </record> <!-- Termino la vista formulario. -->
 
-        <record id="view_tarea12_nomina_search" model="ir.ui.view">
-            <field name="name">tarea12.nomina.search</field>
-            <field name="model">tarea12.nomina</field>
-            <field name="arch" type="xml">
-                <search>
-                    <field name="name"/>
-                    <field name="employee_id"/>
-                    <field name="state"/>
-                    <filter name="filter_state_draft" string="Redactadas" domain="[('state', '=', 'draft')]"/>
-                    <filter name="filter_state_confirmed" string="Confirmadas" domain="[('state', '=', 'confirmed')]"/>
-                    <filter name="filter_state_paid" string="Pagadas" domain="[('state', '=', 'paid')]"/>
-                </search>
-            </field>
-        </record>
+        <record id="view_tarea12_nomina_search" model="ir.ui.view"> <!-- Vista de búsqueda para facilitar filtros. -->
+            <field name="name">tarea12.nomina.search</field> <!-- Nombre técnico de la vista de búsqueda. -->
+            <field name="model">tarea12.nomina</field> <!-- Modelo al que aplica. -->
+            <field name="arch" type="xml"> <!-- Inicio la definición XML. -->
+                <search> <!-- Declaro los elementos de búsqueda. -->
+                    <field name="name"/> <!-- Permito buscar por referencia. -->
+                    <field name="employee_id"/> <!-- Permito filtrar por empleado. -->
+                    <field name="state"/> <!-- Permito buscar por estado. -->
+                    <filter name="filter_state_draft" string="Redactadas" domain="[('state', '=', 'draft')]"/> <!-- Filtro rápido para borradores. -->
+                    <filter name="filter_state_confirmed" string="Confirmadas" domain="[('state', '=', 'confirmed')]"/> <!-- Filtro para nóminas confirmadas. -->
+                    <filter name="filter_state_paid" string="Pagadas" domain="[('state', '=', 'paid')]"/> <!-- Filtro para nóminas pagadas. -->
+                </search> <!-- Cierro la vista de búsqueda. -->
+            </field> <!-- Termino el campo arch de búsqueda. -->
+        </record> <!-- Concluyo la vista search. -->
 
-        <record id="action_tarea12_nomina" model="ir.actions.act_window">
-            <field name="name">Nóminas</field>
-            <field name="res_model">tarea12.nomina</field>
-            <field name="view_mode">list,form</field>
-            <field name="context">{'default_state': 'draft'}</field>
-        </record>
-    </data>
-</odoo>
+        <record id="action_tarea12_nomina" model="ir.actions.act_window"> <!-- Acción principal para abrir las nóminas. -->
+            <field name="name">Nóminas</field> <!-- Nombre visible en el menú. -->
+            <field name="res_model">tarea12.nomina</field> <!-- Modelo que se abrirá al ejecutar la acción. -->
+            <field name="view_mode">list,form</field> <!-- Pongo vista lista y formulario por defecto. -->
+            <field name="context">{'default_state': 'draft'}</field> <!-- Ajusto el contexto para que las nuevas nóminas salgan en borrador. -->
+        </record> <!-- Cierro la acción principal. -->
+    </data> <!-- Finaliza el bloque de datos. -->
+</odoo> <!-- Cierro el archivo XML de vistas de nómina. -->

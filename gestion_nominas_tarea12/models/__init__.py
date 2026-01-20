@@ -1,3 +1,4 @@
 # -*- coding: utf-8 -*-
-from . import payroll
-from . import tax_return
+# Mantengo UTF-8 aquí también por los textos en español.
+from . import payroll  
+from . import tax_return  
