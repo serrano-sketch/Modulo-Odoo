@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="action_tarea12_declaracion_tree" model="ir.actions.act_window">
+            <field name="name">Declaraciones</field>
+            <field name="res_model">tarea12.declaracion.renta</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+        <record id="view_tarea12_nomina_tree" model="ir.ui.view">
+            <field name="name">tarea12.nomina.list</field>
+            <field name="model">tarea12.nomina</field>
+            <field name="arch" type="xml">
+                <list decoration-muted="state == 'draft'" decoration-success="state == 'paid'">
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="date"/>
+                    <field name="salary_base"/>
+                    <field name="bonus_amount"/>
+                    <field name="deduction_amount"/>
+                    <field name="irpf_amount"/>
+                    <field name="net_amount"/>
+                    <field name="state"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_tarea12_nomina_form" model="ir.ui.view">
+            <field name="name">tarea12.nomina.form</field>
+            <field name="model">tarea12.nomina</field>
+            <field name="arch" type="xml">
+                <form string="Nómina">
+                    <sheet>
+                        <header>
+                            <button name="action_reset_to_draft" type="object" string="Reabrir"
+                                    invisible="state not in ['confirmed', 'paid']"/>
+                            <button name="action_confirm" type="object" string="Confirmar" class="btn-primary"
+                                    invisible="state != 'draft'"/>
+                            <button name="action_mark_paid" type="object" string="Marcar como pagada" class="btn-success"
+                                    invisible="state != 'confirmed'"/>
+                            <field name="state" widget="statusbar" statusbar_visible="'draft','confirmed','paid'"/>
+                        </header>
+                        <div class="oe_button_box" name="button_box">
+                            <button class="oe_stat_button" type="action"
+                                    name="%(action_tarea12_declaracion_tree)d"
+                                    invisible="not employee_id"
+                                    context="{'search_default_employee_id': employee_id,
+                                              'default_employee_id': employee_id}">
+                                <div class="o_stat_info">
+                                    <span class="o_stat_text">Declaraciones</span>
+                                </div>
+                            </button>
+                        </div>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="employee_id"/>
+                                <field name="date"/>
+                                <field name="irpf_rate"/>
+                            </group>
+                            <group>
+                                <field name="salary_base"/>
+                                <field name="bonus_amount" readonly="1"/>
+                                <field name="deduction_amount" readonly="1"/>
+                                <field name="taxable_amount" readonly="1"/>
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Bonificaciones y deducciones">
+                                <field name="adjustment_ids">
+                                    <list editable="bottom">
+                                        <field name="type"/>
+                                        <field name="name"/>
+                                        <field name="amount"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Resumen">
+                                <group>
+                                    <field name="gross_amount" readonly="1"/>
+                                    <field name="irpf_amount" readonly="1"/>
+                                    <field name="net_amount" readonly="1"/>
+                                    <field name="payment_receipt" filename="name"/>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tarea12_nomina_search" model="ir.ui.view">
+            <field name="name">tarea12.nomina.search</field>
+            <field name="model">tarea12.nomina</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="state"/>
+                    <filter name="filter_state_draft" string="Redactadas" domain="[('state', '=', 'draft')]"/>
+                    <filter name="filter_state_confirmed" string="Confirmadas" domain="[('state', '=', 'confirmed')]"/>
+                    <filter name="filter_state_paid" string="Pagadas" domain="[('state', '=', 'paid')]"/>
+                </search>
+            </field>
+        </record>
+
+        <record id="action_tarea12_nomina" model="ir.actions.act_window">
+            <field name="name">Nóminas</field>
+            <field name="res_model">tarea12.nomina</field>
+            <field name="view_mode">list,form</field>
+            <field name="context">{'default_state': 'draft'}</field>
+        </record>
+    </data>
+</odoo>

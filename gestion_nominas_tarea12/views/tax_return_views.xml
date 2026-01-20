@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_tarea12_declaracion_tree" model="ir.ui.view">
+            <field name="name">tarea12.declaracion.renta.list</field>
+            <field name="model">tarea12.declaracion.renta</field>
+            <field name="arch" type="xml">
+                <list>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="year"/>
+                    <field name="payroll_count"/>
+                    <field name="salary_total"/>
+                    <field name="irpf_total"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_tarea12_declaracion_form" model="ir.ui.view">
+            <field name="name">tarea12.declaracion.renta.form</field>
+            <field name="model">tarea12.declaracion.renta</field>
+            <field name="arch" type="xml">
+                <form string="Declaración de renta">
+                    <sheet>
+                        <group>
+                            <group>
+                                <field name="name" readonly="1"/>
+                                <field name="employee_id"/>
+                                <field name="year"/>
+                            </group>
+                            <group>
+                                <field name="salary_total" readonly="1"/>
+                                <field name="irpf_total" readonly="1"/>
+                                <field name="payroll_count" readonly="1"/>
+                            </group>
+                        </group>
+                        <group>
+                            <field name="date_from" invisible="1"/>
+                            <field name="date_to" invisible="1"/>
+                            <field name="payroll_ids" widget="many2many_tags"
+                                   domain="[('employee_id', '=', employee_id),
+                                            ('date', '&gt;=', date_from or False),
+                                            ('date', '&lt;=', date_to or False)]"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_tarea12_declaracion_search" model="ir.ui.view">
+            <field name="name">tarea12.declaracion.renta.search</field>
+            <field name="model">tarea12.declaracion.renta</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="employee_id"/>
+                    <field name="year"/>
+                </search>
+            </field>
+        </record>
+
+    </data>
+</odoo>

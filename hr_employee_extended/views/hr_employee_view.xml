@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_employee_form_extended" model="ir.ui.view">
+        <field name="name">hr.employee.form.extended</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <!-- Locate the identification field (Badge ID) and add ours after -->
+            <!-- Note: In standard Odoo, 'identification_id' is often in the 'Private Information' tab -->
+            <!-- If we fail to find it, we might error, but it is a very standard field -->
+            <xpath expr="//field[@name='identification_id']" position="after">
+                <field name="dni"/>
+                <field name="nss"/>
+            </xpath>
+            <xpath expr="//field[@name='ssnid']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>

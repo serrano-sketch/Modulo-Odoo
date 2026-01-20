@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- App launcher tile -->
+        <menuitem id="menu_tarea12_app_root"
+                  name="Gestión Nóminas T12"
+                  parent=""
+                  action="action_tarea12_nomina"
+                  sequence="55"
+                  groups="hr.group_hr_user"/>
+
+        <menuitem id="menu_tarea12_nominas_root"
+                  name="Nóminas"
+                  parent="hr.menu_hr_root"
+                  sequence="40"/>
+
+        <menuitem id="menu_tarea12_nominas_payroll"
+                  name="Listado de nóminas"
+                  parent="menu_tarea12_nominas_root"
+                  action="action_tarea12_nomina"
+                  sequence="10"/>
+
+        <menuitem id="menu_tarea12_nominas_tax_returns"
+                  name="Declaraciones anuales"
+                  parent="menu_tarea12_nominas_root"
+                  action="action_tarea12_declaracion_tree"
+                  sequence="20"/>
+    </data>
+</odoo>

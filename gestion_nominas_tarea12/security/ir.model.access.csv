@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_tarea12_nomina_user,tarea12.nomina.user,model_tarea12_nomina,hr.group_hr_user,1,1,1,0
+access_tarea12_nomina_manager,tarea12.nomina.manager,model_tarea12_nomina,hr.group_hr_manager,1,1,1,1
+access_tarea12_nomina_ajuste_user,tarea12.nomina.ajuste.user,model_tarea12_nomina_ajuste,hr.group_hr_user,1,1,1,0
+access_tarea12_nomina_ajuste_manager,tarea12.nomina.ajuste.manager,model_tarea12_nomina_ajuste,hr.group_hr_manager,1,1,1,1
+access_tarea12_declaracion_user,tarea12.declaracion.user,model_tarea12_declaracion_renta,hr.group_hr_user,1,1,1,0
+access_tarea12_declaracion_manager,tarea12.declaracion.manager,model_tarea12_declaracion_renta,hr.group_hr_manager,1,1,1,1
